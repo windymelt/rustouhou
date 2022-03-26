@@ -1,3 +1,6 @@
+#[macro_use]
+extern crate juniper;
+
 use std::{io, sync::Arc};
 
 use actix_cors::Cors;

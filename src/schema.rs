@@ -1,16 +1,27 @@
+use juniper::FieldResult;
 use juniper::{EmptyMutation, EmptySubscription, RootNode};
-use juniper::{FieldError, FieldResult};
 
 mod characters;
+mod titles;
 
 pub struct QueryRoot;
 
 #[juniper::graphql_object]
 impl QueryRoot {
-    fn character(_id: String) -> FieldResult<characters::Character> {
+    fn character(_id: String) -> FieldResult<Option<characters::Character>> {
         let chars = characters::get_characters();
-        let char = chars.iter().find(|c| c.id == _id).map(|c| c.clone());
-        return char.ok_or(FieldError::from("Character not found"));
+        let char = chars.iter().find(|c| c._id == _id).map(|c| c.clone());
+        return Ok(char);
+    }
+    fn character_with_name(name: String) -> FieldResult<Option<characters::Character>> {
+        let chars = characters::get_characters();
+        let char = chars.iter().find(|c| c.name == name).map(|c| c.clone());
+        return Ok(char);
+    }
+    fn title(_id: String) -> FieldResult<Option<titles::Title>> {
+        let titles = titles::get_titles();
+        let title = titles.iter().find(|t| t._id == _id).map(|t| t.clone());
+        return Ok(title);
     }
 }
 
