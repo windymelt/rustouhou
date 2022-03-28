@@ -1305,7 +1305,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "rustoho"
+name = "rustouhou"
 version = "0.1.0"
 dependencies = [
  "actix-cors",
