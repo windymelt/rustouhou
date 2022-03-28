@@ -1,6 +1,6 @@
 use serde::Deserialize;
 
-#[derive(Clone)]
+#[derive(Deserialize, Clone)]
 pub struct Title {
     pub _id: String,
     pub name: String,
@@ -30,20 +30,12 @@ impl Title {
     }
 }
 
-#[derive(Deserialize, Clone)]
-pub struct YamlTitle {
-    pub id: String,
-    pub name: String,
-    pub published_year: i32,
-    pub appeared_characters: Vec<String>,
-}
-
 use memoise::memoise;
 use serde_yaml;
 #[memoise(true == true)]
-fn get_titles_yaml() -> Vec<YamlTitle> {
+fn get_titles_yaml() -> Vec<Title> {
     let titles = std::fs::read_to_string("./titles.yml").map(|titles_string| {
-        let y: Result<Vec<YamlTitle>, _> = serde_yaml::from_str(&titles_string);
+        let y: Result<Vec<Title>, _> = serde_yaml::from_str(&titles_string);
         return y.unwrap();
     });
 
@@ -51,15 +43,6 @@ fn get_titles_yaml() -> Vec<YamlTitle> {
 }
 
 pub fn get_titles() -> Vec<Title> {
-    let titles: Vec<Title> = get_titles_yaml()
-        .iter()
-        .map(|t| Title {
-            _id: t.id.clone(),
-            name: t.name.clone(),
-            published_year: t.published_year,
-            appeared_characters: t.appeared_characters.clone(),
-        })
-        .collect();
-
-    return titles;
+    /* If you need post processing, write it here */
+    return get_titles_yaml();
 }
