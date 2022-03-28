@@ -25,7 +25,7 @@ impl Title {
         return super::characters::get_characters()
             .iter()
             .filter(|c| self.appeared_characters.contains(&c.name))
-            .map(|c| c.clone())
+            .cloned()
             .collect();
     }
 }

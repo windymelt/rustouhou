@@ -25,7 +25,7 @@ impl Character {
         return super::titles::get_titles()
             .iter()
             .filter(|t| t.appeared_characters.contains(&self.name))
-            .map(|t| t.clone())
+            .cloned()
             .collect();
     }
 }
