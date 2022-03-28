@@ -1,5 +1,5 @@
 [package]
-name = "rustoho"
+name = "rustouhou"
 version = "0.1.0"
 authors = ["Windymelt <windymelt@3qe.us>"]
 edition = "2018"
